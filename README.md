@@ -69,7 +69,7 @@ By analyzing historical trends and leveraging real-time data, we aim to provide 
 
 ## 🔗 Additional Links
 
-- **GitHub Repository**: [Dry-Spell](https://github.com/BaljinderHothi/Dry-Spell)
+- **Live Website**: [Dry-Spell](https://dryspell.streamlit.app/)
 - **LinkedIn Profiles**:
   - [Baljinder Hothi](https://www.linkedin.com/in/baljinder-hothi/)
   - [Abrar Habib](https://www.linkedin.com/in/abrar-habib1/)
