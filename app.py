@@ -1,6 +1,7 @@
 import streamlit as st
 import pandas as pd
 import matplotlib.pyplot as plt
+import requests
 
 # Load the dataset
 @st.cache_data
@@ -34,8 +35,48 @@ It has been 43 days and counting of no rain.
          
 Not only is this drought causing us to preserve water, but its also causing fires the lower the air quality index.
          
-         # Display air quality index live below if possible
 """)
+
+def fetch_air_quality():
+    api_url = "https://api.open-meteo.com/v1/air-quality"
+    params = {
+        "latitude": 40.7128,  # NYC latitude
+        "longitude": -74.0060,  # NYC longitude
+        "hourly": "pm10,pm2_5,ozone,carbon_monoxide,sulphur_dioxide,nitrogen_dioxide"
+    }
+    
+    try:
+        response = requests.get(api_url, params=params)
+        response.raise_for_status()
+        data = response.json()
+
+        # Extracting the latest air quality data from the response
+        if 'hourly' in data:
+            latest_data = {
+                "PM10": data["hourly"]["pm10"][-1],
+                "PM2.5": data["hourly"]["pm2_5"][-1],
+                "Ozone": data["hourly"]["ozone"][-1],
+                "CO": data["hourly"]["carbon_monoxide"][-1],
+                "SO2": data["hourly"]["sulphur_dioxide"][-1],
+                "NO2": data["hourly"]["nitrogen_dioxide"][-1]
+            }
+            return latest_data
+        else:
+            st.error("No air quality data available")
+            return None
+    except requests.exceptions.RequestException as e:
+        st.error(f"Error fetching air quality data: {e}")
+        return None
+
+st.subheader("Latest Air Quality Index for NYC")
+air_quality_data = fetch_air_quality()
+
+if air_quality_data:
+    st.write("### Current Air Quality Levels in NYC:")
+    for pollutant, level in air_quality_data.items():
+        st.write(f"{pollutant}: {level} µg/m³")
+else:
+    st.write("Could not retrieve air quality data at this time.")
 
 st.subheader("Facts")
 st.write("""
