@@ -33,7 +33,6 @@ def load_data():
     except FileNotFoundError:
         st.error("File not found. Please check the file path.")
         return None
-
 def fetch_air_quality(sensor_index):
     url = f"https://api.purpleair.com/v1/sensors/{sensor_index}"
     headers = {
@@ -44,19 +43,18 @@ def fetch_air_quality(sensor_index):
     }
     try:
         response = requests.get(url, headers=headers, params=params)
-        response.raise_for_status()
+        response.raise_for_status()  
         data = response.json()
 
-        if 'sensor' in data:
+        if 'sensor' in data and 'pm2.5_atm' in data['sensor']:
             pm25 = data['sensor']['pm2.5_atm']
             return pm25
         else:
             st.error("No air quality data available")
             return None
-    except requests.exceptions.RequestException as e:
+    except requests.exceptions.HTTPError as e:
         st.error(f"Error fetching air quality data: {e}")
         return None
-
 
 df = load_data()
 
