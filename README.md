@@ -13,14 +13,54 @@ Real-Time Weather Updates: Leveraging weather APIs to monitor current conditions
 
 Programming Language: Python
 Data Analysis & Visualization: Pandas, Matplotlib, Plotly, Seaborn
-APIs: National Weather Service, OpenWeatherMap
-Frontend: Streamlit (for a clean and interactive web interface)
-Hosting: Streamlit Cloud or similar platforms
+APIs: PurpleAir API
+Frontend: Streamlit 
+Hosting: Streamlit
 
-## 📊 Datasets and Resources
+## 📊 Data Sources
 
-We've pulled data from several sources to ensure comprehensive insights:
+1. **NYC Department of Environmental Protection**: Provides historical data on water consumption, rainfall, and reservoir levels, giving insights into how NYC's water usage has evolved over the decades.
+2. **PurpleAir API**: Integrated to fetch real-time air quality data, focusing on PM2.5 concentrations to assess the impact of drought conditions on air quality in NYC.
 
-NYC Water Consumption & Rainfall: NYC Open Data
-Historical Drought Information: NYC.gov
-Weather Data API: National Weather Service & OpenWeatherMap for real-time precipitation updates
+## 🚀 How It Works
+
+1. **Data Loading & Preprocessing**: The app loads historical water consumption data and calculates total water usage per year based on daily consumption rates.
+
+2. **Air Quality Monitoring**:
+   - Utilizes the **PurpleAir API** to fetch the latest PM2.5 data using:
+     ```python
+     import os
+     import requests
+     API_KEY = os.getenv("PURPLEAIR_API_KEY")
+     SENSOR_INDEX = '138818'
+     ```
+   - Displays real-time air quality data, which is crucial given the current drought's impact on health.
+
+3. **Interactive Visualizations**:
+   - Historical trends in **NYC water consumption** are displayed through line charts, showing both per capita and total water usage over time.
+   - Bar charts visualize **total annual water consumption**, highlighting reductions due to conservation efforts.
+   - Real-time data on NYC’s water storage levels and daily consumption figures are shown.
+
+## 🌍 Why This Project Matters
+
+The recent dry spell in NYC is not just a matter of water conservation but also a public health concern. The lack of rainfall has led to fires, reduced air quality, and increased health risks. This project brings awareness to these issues and emphasizes the need for continued efforts in water conservation and air quality monitoring.
+
+By analyzing historical trends and leveraging real-time data, we aim to provide insights that can help policymakers and the public better prepare for the impacts of prolonged droughts.
+
+## 📈 Example Visualizations
+
+1. **NYC Water Consumption Over Time**: 
+   - Line chart showing a decline in water usage since the 1990s, attributed to conservation measures and technological advancements.
+
+2. **Per Capita Water Usage**:
+   - Illustrates the reduction in per capita consumption, reflecting the success of water-saving initiatives.
+
+3. **Air Quality Index**:
+   - Real-time display of the latest air quality readings, categorized by AQI levels to inform residents of health risks.
+
+## 🔗 Additional Links
+
+- **GitHub Repository**: [Dry-Spell](https://github.com/BaljinderHothi/Dry-Spell)
+- **LinkedIn Profiles**:
+  - [Baljinder Hothi](https://www.linkedin.com/in/baljinder-hothi/)
+  - [Abrar Habib](https://www.linkedin.com/in/abrar-habib1/)

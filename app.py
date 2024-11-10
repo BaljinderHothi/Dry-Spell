@@ -20,7 +20,7 @@ data = {
     ]
 }
 
-# Convert the data into a DataFrame
+
 df2 = pd.DataFrame(data)
 
 @st.cache_data
@@ -60,9 +60,13 @@ def fetch_air_quality(sensor_index):
 
 df = load_data()
 
-
 st.title("Dry Spell")
-st.markdown("### Made by Baljinder Hothi and Abrar Habib")
+st.markdown("### Made by [Baljinder Hothi](https://www.linkedin.com/in/baljinder-hothi/) and [Abrar Habib](https://www.linkedin.com/in/abrar-habib1/)")
+
+st.markdown("""
+Check out the [GitHub repository](https://github.com/BaljinderHothi/Dry-Spell) for more details on the project.
+""")
+
 
 st.write("""
 Ask any Native New Yorker when the last time we had a dry spell of no water was? 
@@ -95,15 +99,37 @@ st.write("""
          Long-term exposure is linked to more severe health problems such as chronic respiratory diseases, lung cancer, and cardiovascular diseases.
              """)
 
+st.subheader("Water Storage and Consumption (as of November 8, 2024)")
+st.markdown("""- **Total Storage Capacity**:
+  - Current: **63.6%**
+  - Normal: **79.1%**
+- **Daily Consumption** (as of 11/07/24): **0.99 billion gallons**
+""")
+
+st.subheader("Average Precipitation (inches)")
+st.markdown("""
+- **September**: 
+  - Actual: **1.36** | Historical: **4.72**
+- **October**: 
+  - Actual: **0.87** | Historical: **4.12**
+- **November**: 
+  - Actual: **0.00** | Historical: **0.54**
+""")
+
 st.subheader("Facts")
 st.write("""
 - Fact 1: NYC gets an average of 47 inches of rain per year.
 - Fact 2: The city’s water supply comes from 19 reservoirs and three controlled lakes.
 - Fact 3: Water conservation efforts have reduced daily water usage by over 30% since the 1990s.
+- Fact 4: NYC has three main sources of water: The Catskill, Delaware, and Croton Systems      
+- Catskill System: Provides up to 40% of daily water;   
+- Delaware System: Supplies 50% of daily water; its largest reservoir has a capacity of 140 billion gallons.
+- Croton System: Contributes 10% of daily water (more during droughts);  its largest reservoir has a capacity of 19 billion gallons.
 """)
-
+st.title("NYC Water Systems")
+st.image("water nyc.jpg", caption="Source: NYC Department Of Environmental Protection", use_container_width =True)
 if df is not None:
-    st.subheader("NYC Water Consumption Data")
+    st.subheader("NYC Water Sources")
     st.dataframe(df)
 
     # water consumption 
@@ -116,6 +142,9 @@ if df is not None:
     ax.grid(True)
     st.pyplot(fig)
 
+    st.write("This figure shows the decreasing water consumption in NYC over the past several decades. This could be attributed to factors like improved water conservation measures, or technological advancements in water usage efficiency.")
+    
+    st.write(" ")
     # per Capita Consumption Over Time
     st.subheader("Per Capita Water Consumption Over Time")
     fig, ax = plt.subplots()
@@ -125,7 +154,9 @@ if df is not None:
     ax.set_ylabel('Per Capita (Gallons per Person per Day)')
     ax.grid(True)
     st.pyplot(fig)
+    st.write("The graph shows a clear decline in per capita water consumption over the decades, likely due to conservation efforts, efficiency improvements, and regulatory measures. This aligns with the overall reduction in NYC’s water usage shown in the previous graph.")
 
+    st.write(" ")
     # total Water Consumption
     st.subheader("Total Water Consumption in NYC (Billion Gallons per Year)")
     fig, ax = plt.subplots()
@@ -135,7 +166,14 @@ if df is not None:
     ax.set_ylabel('Total Consumption (Billion Gallons per Year)')
     ax.grid(True)
     st.pyplot(fig)
+    st.write("The graph shows a significant reduction in NYC's total water consumption over the decades, consistent with earlier charts on daily and per capita usage. This likely reflects efficiency improvements, conservation efforts, and regulatory measures.")
 
+    st.subheader("Conclusion")
+    st.write("""
+    NYC is currently experiencing a historic drought, with over 40 days without rain—something most New Yorkers have never seen before. This dry spell is affecting us in more ways than just water conservation. It's increasing the risk of fires, degrading air quality, and taking a toll on people's health.
+
+    While our analysis highlights how NYC has managed to cut down water usage over the years, this drought shows we can’t let up on conservation efforts. By digging into historical rainfall trends and monitoring current conditions, we can be better prepared to handle future droughts and protect our water supply and community well-being.
+    """)
     st.subheader("Key Statistics")
     st.write(df.describe())
 else:
