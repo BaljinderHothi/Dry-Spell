@@ -3,7 +3,7 @@
 
 If you ask any New York City resident about when was the last time they had over 40 days of no rain, they would't be able to tell you, thats because this is a historic event in New York City. This project aims to discuss the impacts and information around NYC's recent drought conditions, visualize historical rainfall data, and discuss the implications for our water supply.
 
-## Key Features:
+## 🗝️ Key Features:
 Causes of NYC's Current Drought: Analyzing factors contributing to recent dry conditions.
 Rainfall Data Visualization: Interactive graphs showcasing changes in rainfall patterns over the years.
 Water Consumption Insights: Understanding how NYC's residents use water and the impact on reservoir levels.
