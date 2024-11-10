@@ -1,9 +1,14 @@
+import os
 import streamlit as st
 import pandas as pd
 import matplotlib.pyplot as plt
 import requests
+from dotenv import load_dotenv
 
-# Load the dataset
+load_dotenv()
+API_KEY = os.getenv("PURPLEAIR_API_KEY")
+
+
 @st.cache_data
 def load_data():
     file_path = './Data/Water_Consumption_in_the_City_of_New_York_20241109.csv'
@@ -15,13 +20,35 @@ def load_data():
         st.error("File not found. Please check the file path.")
         return None
 
-# Load data
+def fetch_air_quality(sensor_index):
+    url = f"https://api.purpleair.com/v1/sensors/{sensor_index}"
+    headers = {
+        "X-API-Key": API_KEY
+    }
+    params = {
+        "fields": "pm2.5_atm"
+    }
+    try:
+        response = requests.get(url, headers=headers, params=params)
+        response.raise_for_status()
+        data = response.json()
+
+        if 'sensor' in data:
+            pm25 = data['sensor']['pm2.5_atm']
+            return pm25
+        else:
+            st.error("No air quality data available")
+            return None
+    except requests.exceptions.RequestException as e:
+        st.error(f"Error fetching air quality data: {e}")
+        return None
+
+
 df = load_data()
 
-# Streamlit App Interface
+
 st.title("Dry Spell")
 st.markdown("### Made by Baljinder Hothi and Abrar Habib")
-
 
 st.write("""
 Ask any Native New Yorker when the last time we had a dry spell of no water was? 
@@ -33,48 +60,15 @@ The last time it rained in NYC was Sept 27....
 
 It has been 43 days and counting of no rain.
          
-Not only is this drought causing us to preserve water, but its also causing fires the lower the air quality index.
-         
+Not only is this drought causing us to preserve water, but it's also causing fires and lowering the air quality index.
 """)
 
-def fetch_air_quality():
-    api_url = "https://api.open-meteo.com/v1/air-quality"
-    params = {
-        "latitude": 40.7128,  # NYC latitude
-        "longitude": -74.0060,  # NYC longitude
-        "hourly": "pm10,pm2_5,ozone,carbon_monoxide,sulphur_dioxide,nitrogen_dioxide"
-    }
-    
-    try:
-        response = requests.get(api_url, params=params)
-        response.raise_for_status()
-        data = response.json()
-
-        # Extracting the latest air quality data from the response
-        if 'hourly' in data:
-            latest_data = {
-                "PM10": data["hourly"]["pm10"][-1],
-                "PM2.5": data["hourly"]["pm2_5"][-1],
-                "Ozone": data["hourly"]["ozone"][-1],
-                "CO": data["hourly"]["carbon_monoxide"][-1],
-                "SO2": data["hourly"]["sulphur_dioxide"][-1],
-                "NO2": data["hourly"]["nitrogen_dioxide"][-1]
-            }
-            return latest_data
-        else:
-            st.error("No air quality data available")
-            return None
-    except requests.exceptions.RequestException as e:
-        st.error(f"Error fetching air quality data: {e}")
-        return None
 
 st.subheader("Latest Air Quality Index for NYC")
-air_quality_data = fetch_air_quality()
+air_quality = fetch_air_quality(SENSOR_INDEX)
 
-if air_quality_data:
-    st.write("### Current Air Quality Levels in NYC:")
-    for pollutant, level in air_quality_data.items():
-        st.write(f"{pollutant}: {level} µg/m³")
+if air_quality is not None:
+    st.write(f"**Current PM2.5 Concentration:** {air_quality} µg/m³")
 else:
     st.write("Could not retrieve air quality data at this time.")
 
@@ -84,19 +78,6 @@ st.write("""
 - Fact 2: The city’s water supply comes from 19 reservoirs and three controlled lakes.
 - Fact 3: Water conservation efforts have reduced daily water usage by over 30% since the 1990s.
 """)
-
-
-st.subheader("Latest Weather ")
-st.write("This section will display the latest weather news from API calls.")
-st.text("Yap yap yap... (API integration goes here)")
-
-st.subheader("What Does This Drought Mean?")
-st.text("Yap yap yap yap yap yap yap yap yap yap... (You can fill in details here)")
-
-st.subheader("What Can We Do?")
-st.text("Yap yap yap yap yap yap yap yap yap yap... (You can fill in details here)")
-
-
 
 if df is not None:
     st.subheader("NYC Water Consumption Data")
