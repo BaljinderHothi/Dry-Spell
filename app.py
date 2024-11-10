@@ -7,7 +7,21 @@ from dotenv import load_dotenv
 
 load_dotenv()
 API_KEY = os.getenv("PURPLEAIR_API_KEY")
+SENSOR_INDEX = '138818'
 
+data = {
+    "AQI Category": ["Good", "Moderate", "Unhealthy for Sensitive Groups", 
+                     "Unhealthy", "Very Unhealthy", "Hazardous"],
+    "Index Values": ["0 - 50", "51 - 100", "101 - 150", 
+                     "151 - 200", "201 - 300", "301 - 500"],
+    "Revised Breakpoints (µg/m³, 24-hour average)": [
+        "0.0 – 12.0", "12.1 – 35.4", "35.5 – 55.4", 
+        "55.5 – 150.4", "150.5 – 250.4", "250.5 – 500"
+    ]
+}
+
+# Convert the data into a DataFrame
+df2 = pd.DataFrame(data)
 
 @st.cache_data
 def load_data():
@@ -71,6 +85,15 @@ if air_quality is not None:
     st.write(f"**Current PM2.5 Concentration:** {air_quality} µg/m³")
 else:
     st.write("Could not retrieve air quality data at this time.")
+
+st.subheader("Air Quality Index (AQI) Categories")
+st.dataframe(df2)
+
+st.write(""" 
+             Short-term exposure can cause irritation of the eyes, nose, throat, and lungs. It can also worsen conditions like asthma and heart disease.
+              
+         Long-term exposure is linked to more severe health problems such as chronic respiratory diseases, lung cancer, and cardiovascular diseases.
+             """)
 
 st.subheader("Facts")
 st.write("""
