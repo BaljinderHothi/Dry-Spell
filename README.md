@@ -12,15 +12,20 @@ Real-Time Weather Updates: Leveraging weather APIs to monitor current conditions
 ## 🛠️ Tech Stack
 
 Programming Language: Python
+
 Data Analysis & Visualization: Pandas, Matplotlib, Plotly, Seaborn
+
 APIs: PurpleAir API
+
 Frontend: Streamlit 
+
 Hosting: Streamlit
 
 ## 📊 Data Sources
 
 1. **NYC Department of Environmental Protection**: Provides historical data on water consumption, rainfall, and reservoir levels, giving insights into how NYC's water usage has evolved over the decades.
-2. **PurpleAir API**: Integrated to fetch real-time air quality data, focusing on PM2.5 concentrations to assess the impact of drought conditions on air quality in NYC.
+   
+3. **PurpleAir API**: Integrated to fetch real-time air quality data, focusing on PM2.5 concentrations to assess the impact of drought conditions on air quality in NYC.
 
 ## 🚀 How It Works
 
@@ -34,11 +39,15 @@ Hosting: Streamlit
      API_KEY = os.getenv("PURPLEAIR_API_KEY")
      SENSOR_INDEX = '138818'
      ```
+     
    - Displays real-time air quality data, which is crucial given the current drought's impact on health.
 
 3. **Interactive Visualizations**:
+   
    - Historical trends in **NYC water consumption** are displayed through line charts, showing both per capita and total water usage over time.
+     
    - Bar charts visualize **total annual water consumption**, highlighting reductions due to conservation efforts.
+     
    - Real-time data on NYC’s water storage levels and daily consumption figures are shown.
 
 ## 🌍 Why This Project Matters
