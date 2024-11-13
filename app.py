@@ -15,8 +15,8 @@ data = {
     "Index Values": ["0 - 50", "51 - 100", "101 - 150", 
                      "151 - 200", "201 - 300", "301 - 500"],
     "Revised Breakpoints (µg/m³, 24-hour average)": [
-        "0.0 – 12.0", "12.1 – 35.4", "35.5 – 55.4", 
-        "55.5 – 150.4", "150.5 – 250.4", "250.5 – 500"
+        "0.0 - 12.0", "12.1 - 35.4", "35.5 - 55.4", 
+        "55.5 - 150.4", "150.5 - 250.4", "250.5 - 500"
     ]
 }
 
@@ -33,6 +33,7 @@ def load_data():
     except FileNotFoundError:
         st.error("File not found. Please check the file path.")
         return None
+    
 def fetch_air_quality(sensor_index):
     url = f"https://api.purpleair.com/v1/sensors/{sensor_index}"
     headers = {
